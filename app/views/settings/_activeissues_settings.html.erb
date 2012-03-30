@@ -1,0 +1,8 @@
+<fieldset>
+  <legend><%= l(:plugin_active_issues_statuses) %></legend>
+  <p><label></label>
+    <% IssueStatus.all.each do |status| %>
+    <%= check_box_tag 'settings[status_ids][]', status.id, (@settings["status_ids"] || []).include?(status.id.to_s) %><%= status.name  %><br />
+    <% end  %>
+  </p>
+</fieldset>
