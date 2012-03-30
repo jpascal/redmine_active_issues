@@ -1,0 +1,9 @@
+<h2><%= l(:label_active_issues) %></h2>
+<% html_title(l(:label_active_issues)) %>
+
+<% if @issues.empty? %>
+<p class="nodata"><%= l(:label_no_data) %></p>
+<% else %>
+<%= render 'list', :issues => @issues, :query => @query %>
+<p class="pagination"><%= pagination_links_full @issue_pages, @issue_count %></p>
+<% end %>
