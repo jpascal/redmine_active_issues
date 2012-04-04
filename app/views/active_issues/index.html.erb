@@ -1,9 +1,17 @@
-<h2><%= l(:plugin_active_issues) %></h2>
+<h2><%= l(:plugin_active_issues) %></h2>123
 <% html_title(l(:plugin_active_issues)) %>
 
+<% if @query.valid? %>
 <% if @issues.empty? %>
 <p class="nodata"><%= l(:label_no_data) %></p>
 <% else %>
-<%= render 'list', :issues => @issues, :query => @query %>
+<%= render :partial => 'issues/list', :locals => {:issues => @issues, :query => @query} %>
 <p class="pagination"><%= pagination_links_full @issue_pages, @issue_count %></p>
 <% end %>
+
+<% end %>
+<%= call_hook(:view_issues_index_bottom, { :issues => @issues, :project => @project, :query => @query }) %>
+
+
+
+<%= context_menu issues_context_menu_path %>

@@ -1,2 +1,3 @@
-module ActiveIssuesHelper
+module ActiveIssuesHelper 
+  include IssuesHelper
 end

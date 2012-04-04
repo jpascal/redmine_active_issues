@@ -7,6 +7,9 @@ class ActiveIssuesController < ApplicationController
   include QueriesHelper
   helper :sort
   include SortHelper
+  helper :issue_relations
+  include IssueRelationsHelper
+  include IssuesHelper
 
   def index
     @query = Query.new(:name => "_")
