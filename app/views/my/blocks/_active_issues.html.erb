@@ -1,4 +1,4 @@
-<h3><%=l(:label_active_issues)%></h3>
+<h3><%=l(:plugin_active_issues)%></h3>
 <% assigned_issues = Issue.visible.open.find(:all,
 :conditions => ["start_date <= ? and status_id in (?) and assigned_to_id in (?)", Time.now, (Setting.plugin_redmine_active_issues['status_ids'] || []).collect {|i| i.to_i},([User.current.id] + User.current.group_ids)],                                
                                 
