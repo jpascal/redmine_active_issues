@@ -16,7 +16,6 @@ Redmine::Plugin.register :redmine_active_issues do
   menu :project_menu, :active_issues, { :controller => 'active_issues', :action => 'index' }, :caption => :plugin_active_issues, :after => :activity, :param => :project_id
 end
 
-
 class ::User < Principal
   USER_FORMATS[:firstname_short_lastname] = {:string => '#{firstname} #{lastname.chars.first}.', :order => %w(firstname lastname id)}
   USER_FORMATS[:lastname_short_firstname] = {:string => '#{lastname} #{firstname.chars.first}.', :order => %w(lastname firstname id)}
