@@ -1,5 +1,20 @@
-<h2><%= l(:plugin_active_issues) %></h2>123
+<h2><%= l(:plugin_active_issues) %></h2>
 <% html_title(l(:plugin_active_issues)) %>
+
+<% form_tag({ :controller => 'active_issues', :action => 'index', :project_id => @project }, :method => :get, :id => 'query_form') do %>
+    <%= hidden_field_tag 'set_filter', '1' %>
+    <div id="query_form_content" class="hide-when-print">
+    <fieldset id="filters" class="collapsible <%= @query.new_record? ? "collapsed" : "" %>">
+      <legend onclick="toggleFieldset(this);"><%= l(:label_filter_plural) %></legend>
+      <div style="<%= @query.new_record? ? "display: none;" : ""%>">
+        <%= render :partial => 'queries/filters', :locals => {:query => @query} %>
+	    <p class="buttons hide-when-print">
+	    <%= link_to_function l(:button_apply), 'submit_query_form("query_form")', :class => 'icon icon-checked' %>
+	    <%= link_to l(:button_clear), { :set_filter => 1, :project_id => @project }, :class => 'icon icon-reload'  %>
+	    </p>
+      </div>
+    </fieldset>
+<% end %>
 
 <% if @query.valid? %>
 <% if @issues.empty? %>

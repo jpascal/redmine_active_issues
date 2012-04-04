@@ -13,6 +13,7 @@ class ActiveIssuesController < ApplicationController
 
   def index
     @query = Query.new(:name => "_")
+    @query.filters.reject! {|key,value| ['status_id'].include? key.to_s}
     @query.project = @project
     @query.group_by = "tracker"
     sort_init(@query.sort_criteria.empty? ? [['id', 'desc']] : @query.sort_criteria)
