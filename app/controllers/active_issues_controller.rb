@@ -20,7 +20,7 @@ class ActiveIssuesController < ApplicationController
                             :order => sort_clause,
                             :offset => @issue_pages.current.offset,
                             :limit => per_page_option,
-                            :conditions => ["due_date <= ? and status_id in (?)", Time.now, (Setting.plugin_redmine_active_issues['status_ids'] || []).collect {|i| i.to_i}])
+                            :conditions => ["start_date <= ? and status_id in (?)", Time.now, (Setting.plugin_redmine_active_issues['status_ids'] || []).collect {|i| i.to_i}])
     @issue_count_by_group = @query.issue_count_by_group
     render 'index', :layout => !request.xhr?
   end
