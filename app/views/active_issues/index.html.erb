@@ -1,21 +1,6 @@
 <h2><%= l(:plugin_active_issues) %></h2>
 <% html_title(l(:plugin_active_issues)) %>
 
-<% form_tag({ :controller => 'active_issues', :action => 'index', :project_id => @project }, :method => :get, :id => 'query_form') do %>
-    <%= hidden_field_tag 'set_filter', '1' %>
-    <div id="query_form_content" class="hide-when-print">
-    <fieldset id="filters" class="collapsible <%= @query.new_record? ? "collapsed" : "" %>">
-      <legend onclick="toggleFieldset(this);"><%= l(:label_filter_plural) %></legend>
-      <div style="<%= @query.new_record? ? "display: none;" : ""%>">
-        <%= render :partial => 'queries/filters', :locals => {:query => @query} %>
-	    <p class="buttons hide-when-print">
-	    <%= link_to_function l(:button_apply), 'submit_query_form("query_form")', :class => 'icon icon-checked' %>
-	    <%= link_to l(:button_clear), { :set_filter => 1, :project_id => @project }, :class => 'icon icon-reload'  %>
-	    </p>
-      </div>
-    </fieldset>
-<% end %>
-
 <% if @query.valid? %>
 <% if @issues.empty? %>
 <p class="nodata"><%= l(:label_no_data) %></p>
@@ -27,6 +12,14 @@
 <% end %>
 <%= call_hook(:view_issues_index_bottom, { :issues => @issues, :project => @project, :query => @query }) %>
 
+<% content_for :sidebar do %>
+    <h3><%= l(:plugin_active_issues_by_users) %></h3>
+    <%= link_to l(:plugin_active_issues_all_users), :controller => "active_issues", :project_id => @project %></br>
+    <% @users.each do |user| %>
+    	<%= link_to user.to_s + " (#{user.active_issues_in_project(@project).count})", :controller => "active_issues", :project_id => @project, :user => user %></br>
+    <% end %>
+
+<% end %>
 
 
 <%= context_menu issues_context_menu_path %>

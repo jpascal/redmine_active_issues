@@ -2,3 +2,5 @@
 ru:
   plugin_active_issues: "Активные задачи"
   plugin_active_issues_statuses: "Статусы для отображения"
+  plugin_active_issues_by_users: "Активные пользователи"
+  plugin_active_issues_all_users: "Все пользователи"
