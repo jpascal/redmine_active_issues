@@ -1,3 +1,10 @@
+class ::User < Principal
+  def active_issues_in_project project
+    project.issues.find(:all,  :conditions => ["start_date <= ? and status_id in (?) and issues.assigned_to_id = ?", Time.now, (Setting.plugin_redmine_active_issues['status_ids'] || []).collect {|i| i.to_i}, self.id])
+    #status_id in (?)", Time.now, (Setting.plugin_redmine_active_issues['status_ids'] || []).collect {|i| i.to_i}]
+  end
+end
+
 class ActiveIssuesController < ApplicationController
   unloadable
 
@@ -24,8 +31,10 @@ class ActiveIssuesController < ApplicationController
     
     @users = @project.users
 
-    if params[:user].present?
-      conditions = ["start_date <= ? and status_id in (?) and issues.assigned_to_id = ?", Time.now, (Setting.plugin_redmine_active_issues['status_ids'] || []).collect {|i| i.to_i}, params[:user].to_i]
+    current_user = params["user"] || User.current
+    
+    unless current_user == "all"
+      conditions = ["start_date <= ? and status_id in (?) and issues.assigned_to_id = ?", Time.now, (Setting.plugin_redmine_active_issues['status_ids'] || []).collect {|i| i.to_i}, current_user]
     else
       conditions = ["start_date <= ? and status_id in (?)", Time.now, (Setting.plugin_redmine_active_issues['status_ids'] || []).collect {|i| i.to_i}]
     end

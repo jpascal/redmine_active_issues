@@ -14,7 +14,7 @@
 
 <% content_for :sidebar do %>
     <h3><%= l(:plugin_active_issues_by_users) %></h3>
-    <%= link_to l(:plugin_active_issues_all_users), :controller => "active_issues", :project_id => @project %></br>
+    <%= link_to l(:plugin_active_issues_all_users), :controller => "active_issues", :project_id => @project, :user => :all %></br>
     <% @users.each do |user| %>
     	<%= link_to user.to_s + " (#{user.active_issues_in_project(@project).count})", :controller => "active_issues", :project_id => @project, :user => user %></br>
     <% end %>

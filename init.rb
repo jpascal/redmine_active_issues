@@ -19,9 +19,4 @@ end
 class ::User < Principal
   USER_FORMATS[:firstname_short_lastname] = {:string => '#{firstname} #{lastname.chars.first}.', :order => %w(firstname lastname id)}
   USER_FORMATS[:lastname_short_firstname] = {:string => '#{lastname} #{firstname.chars.first}.', :order => %w(lastname firstname id)}
-    
-  def active_issues_in_project project
-    project.issues.find(:all,  :conditions => ["start_date <= ? and status_id in (?) and issues.assigned_to_id = ?", Time.now, (Setting.plugin_redmine_active_issues['status_ids'] || []).collect {|i| i.to_i}, self.id])
-    #status_id in (?)", Time.now, (Setting.plugin_redmine_active_issues['status_ids'] || []).collect {|i| i.to_i}]
-  end
 end
